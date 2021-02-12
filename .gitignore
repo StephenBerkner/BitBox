@@ -1,0 +1,5 @@
+.vscode
+MainProcessor/.vs
+MainProcessor/MainProcessor.atsln
+MainProcessor/MainProcessor/
+WiFiCoProcessor/src/credentials.lua  
