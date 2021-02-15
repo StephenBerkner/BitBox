@@ -1,5 +1,8 @@
 .vscode
-MainProcessor/.vs
-MainProcessor/MainProcessor.atsln
-MainProcessor/MainProcessor/
+
+# Ignore everything except MainProcssor/src and MainProcessor/inc
+MainProcessor/*
+!MainProcessor/inc/*
+!MainProcssor/src/*
+
 WiFiCoProcessor/src/credentials.lua  

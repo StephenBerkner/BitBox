@@ -22,8 +22,12 @@ void buffer_clear(void);
 
 void buffer_push(uint8_t val);
 
+void buffer_shift(void);
+
 void matrix_push_char(uint8_t val);
 
 void matrix_push_str(char * val);
+
+void matrix_display_buffer(void);
 
 #endif /* MATRIX_H_ */

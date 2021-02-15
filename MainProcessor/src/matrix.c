@@ -4,10 +4,14 @@
 
 #include "../inc/matrix.h"
 #include "../inc/spi.h"
+
 #include <stdint.h>
 #include <avr/io.h>
+#include <util/delay.h>
 
-uint8_t buffer[NUM_MATRICIES*NUM_COLUMNS];
+#define TRANSMIT_DELAY_MS 80
+
+uint8_t buffer[NUM_MATRICIES*NUM_COLUMNS];// = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 // Matrix functions 
 void matrix_init(void){
@@ -78,10 +82,46 @@ void buffer_push(uint8_t val){
 	
 }
 
+void buffer_shift(void){
+	for (uint8_t i = 0; i < (NUM_MATRICIES*NUM_COLUMNS - 1); i++){
+		buffer[i]= (buffer[i] << 1) | (buffer[i+1] >> 7);
+	}
+	
+	//set last byte to 0x00
+	buffer[NUM_MATRICIES*NUM_COLUMNS - 1] = (buffer[NUM_MATRICIES*NUM_COLUMNS - 1] << 1);
+	
+	
+}
+
 void matrix_push_char(uint8_t val){
 	
 }
 
 void matrix_push_str(char * val){
+	
+}
+
+void matrix_display_buffer(void){
+	for (uint8_t i = 0x00; i < NUM_MATRICIES; i++){
+		for (uint8_t j = 0x01; j < NUM_COLUMNS+1; j++){
+		
+			spi_clear_ss();			
+			for (uint8_t k = 0x00; k < i; k++){
+				spi_write_register(0x00, 0x00);
+			}
+						
+			spi_write_register(j, buffer[j + i * NUM_COLUMNS - 1]);
+						
+			for (uint8_t k = NUM_MATRICIES-1; k > i; k--){
+				spi_write_register(0x00, 0x00);
+			}
+						
+			spi_set_ss();
+						
+		}
+					
+	}
+				
+	_delay_ms(TRANSMIT_DELAY_MS);
 	
 }
