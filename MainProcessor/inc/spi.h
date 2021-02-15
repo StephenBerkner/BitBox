@@ -1,9 +1,12 @@
 /*
- * spi.h
- */ 
+* spi.h
+*/
 
 #ifndef SPI_H_
 #define SPI_H_
+
+#include <stdint.h>
+#include <avr/io.h>
 
 #define SPI_DDR		DDRB
 #define SCK			PINB5

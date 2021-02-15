@@ -1,6 +1,6 @@
 /*
- * spi.c
- */ 
+* spi.c
+*/
 
 #include "../inc/spi.h"
 
@@ -10,8 +10,8 @@ void spi_init(void){
 	// MISO is not currently used
 	SPI_DDR |= (1 << SCK) | (1 << CS) | (1 << MOSI);
 	
-	// SPI bus master
-	SPCR |= (1 << MSTR);
+	// SPI bus master, clock rate = F_CPU/16
+	SPCR |= (1 << MSTR) | (1 << SPR0);
 	
 	// Enable SPI
 	SPCR |= (1 << SPE);

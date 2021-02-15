@@ -1,9 +1,15 @@
 /*
- * matrix.h
- */ 
+* matrix.h
+*/
+
+#include <stdint.h>
+#include <avr/io.h>
 
 #ifndef MATRIX_H_
 #define MATRIX_H_
+
+#define NUM_MATRICIES	4
+#define NUM_COLUMNS		8
 
 //Matrix Functions
 void matrix_init(void);
@@ -14,7 +20,7 @@ void buffer_init(void);
 
 void buffer_clear(void);
 
-void buffer_push(void);
+void buffer_push(uint8_t val);
 
 void matrix_push_char(uint8_t val);
 

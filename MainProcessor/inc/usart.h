@@ -1,6 +1,6 @@
 /*
- * usart.h
- */ 
+* usart.h
+*/
 
 #ifndef F_CPU
 	#define F_CPU 8000000
@@ -10,6 +10,10 @@
 #define MYUBRR F_CPU/16/BAUD-1
 
 #define TRANSMIT_DELAY 10
+
+#include <stdint.h>
+#include <avr/io.h>
+#include <util/delay.h>
 
 #ifndef USART_H_
 #define USART_H_

@@ -1,13 +1,13 @@
 /*
- * usart.c
- */ 
+* usart.c
+*/
 
 #include "../inc/usart.h"
-#include <avr/delay.h>
+#include <util/delay.h>
 
 void usart_init(void){
-	UBRR0H = (unsigned char)(MYUBRR >> 8);
-	UBRR0L = (unsigned char)MYUBRR;
+	UBRR0H = (unsigned char)((MYUBRR) >> 8);
+	UBRR0L = (unsigned char)(MYUBRR);
 	
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 	UCSR0C = (0 << USBS0) | (3 << UCSZ00);

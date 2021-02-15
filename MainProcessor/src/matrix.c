@@ -1,11 +1,13 @@
 /*
- * matrix.c
- *
- */ 
+* matrix.c
+*/
 
 #include "../inc/matrix.h"
+#include "../inc/spi.h"
+#include <stdint.h>
+#include <avr/io.h>
 
-#define NUM_MATRICIES 4
+uint8_t buffer[NUM_MATRICIES*NUM_COLUMNS];
 
 // Matrix functions 
 void matrix_init(void){
@@ -31,20 +33,55 @@ void matrix_init(void){
 	}
 	spi_set_ss();
 	
+}
+
+void matrix_clear(void){
 	
+	for (uint8_t i = 0x01; i < (NUM_COLUMNS + 1); i++){
+		spi_clear_ss();
+		for (uint8_t j = 0x00; j < NUM_MATRICIES; j++){
+			spi_write_register(i, 0x00);
+		}
+		spi_set_ss();
+	}
+
+}
+
+// set all buffer values to 0x00
+void buffer_init(void){
+	
+	for(uint8_t i = 0x00; i < NUM_MATRICIES*NUM_COLUMNS; i++){
+		buffer[i] = 0x00;
+	}
 	
 }
 
-void matrix_clear(void);
+// set all buffer values to 0x00
+void buffer_clear(void){
+	
+	for(uint8_t i = 0x00; i < NUM_MATRICIES*NUM_COLUMNS; i++){
+		buffer[i] = 0x00;
+	}
 
-void buffer_init(void);
+}
 
-void buffer_clear(void);
+// add val at the end of buffer
+void buffer_push(uint8_t val){
+	
+	for (uint8_t i = 0; i < (NUM_MATRICIES*NUM_COLUMNS - 1); i++){
+			//move every byte over by one
+			buffer[i] = buffer[i+1];
+	}
+	
+	//add new byte at the end
+	buffer[NUM_MATRICIES*NUM_COLUMNS - 1] = val;
+	
+}
 
-void buffer_push(void);
+void matrix_push_char(uint8_t val){
+	
+}
 
-void matrix_push_char(uint8_t val);
-
-void matrix_push_str(char * val);
-
-#endif /* MATRIX_H_ */
+void matrix_push_str(char * val){
+	
+}
