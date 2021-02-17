@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define TRANSMIT_DELAY_MS 80
+#define TRANSMIT_DELAY_MS 200
 
 uint8_t buffer[NUM_MATRICIES*NUM_COLUMNS];// = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -49,6 +49,7 @@ void matrix_clear(void){
 		spi_set_ss();
 	}
 
+	buffer_clear();
 }
 
 // set all buffer values to 0x00
@@ -83,14 +84,19 @@ void buffer_push(uint8_t val){
 }
 
 void buffer_shift(void){
-	for (uint8_t i = 0; i < (NUM_MATRICIES*NUM_COLUMNS - 1); i++){
-		buffer[i]= (buffer[i] << 1) | (buffer[i+1] >> 7);
+	//
+	//
+	for(uint8_t i = 0; i < (NUM_COLUMNS*NUM_MATRICIES) - NUM_COLUMNS; i++){
+		buffer[i]= (buffer[i] << 1) | (buffer[i+NUM_COLUMNS] >> 7);
+
 	}
+
+
+	for(uint8_t i = (NUM_COLUMNS*NUM_MATRICIES) - NUM_COLUMNS; i < (NUM_COLUMNS*NUM_MATRICIES); i++){
+		buffer[i]= (buffer[i] << 1) | (buffer[i - ((NUM_COLUMNS*NUM_MATRICIES) - NUM_COLUMNS)] >> 7);
 	
-	//set last byte to 0x00
-	buffer[NUM_MATRICIES*NUM_COLUMNS - 1] = (buffer[NUM_MATRICIES*NUM_COLUMNS - 1] << 1);
-	
-	
+	}
+
 }
 
 void matrix_push_char(uint8_t val){

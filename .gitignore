@@ -1,8 +1,14 @@
 .vscode
 
 # Ignore everything except MainProcssor/src and MainProcessor/inc
-MainProcessor/*
-!MainProcessor/inc/*
-!MainProcssor/src/*
+MainProcessor/.vs
+MainProcessor/MainProcessor.atsln
+MainProcessor/MainProcessor.componentinfo.xml
+MainProcessor/MainProcessor.cproj
+MainProcessor/Debug/*
+MainProcessor/Release
+
+!MainProcessor/inc/*.*
+!MainProcssor/src/*.*
 
 WiFiCoProcessor/src/credentials.lua  
