@@ -5,15 +5,41 @@ from functools import partial
 
 num_cols = 8
 num_rows = 8
+values = [["0" for i in range(num_cols)] for j in range(num_rows)]
 
 
 
-def identify(a,b):
-    print("Col: ", a, " Row: ",b)
+def change_value(row, col):
+    if values[row][col] == "1":
+        values[row][col] = "0"
+    else:
+        values[row][col] = "1"
 
 
-def hi():
-    print("HI")
+def convert():
+    aggregate = []
+
+    for i in range(0, num_cols):
+        for j in range(0, num_rows):
+            aggregate.append(values[i][j])
+
+    to_output = "uint8_t temp[8] = {"
+
+    for i in range (0, num_cols*num_rows):
+        if i == 0:
+            to_output += "0b"
+        elif i % num_rows == 0:
+            to_output += ", 0b"
+        
+        to_output += aggregate[i]
+    
+    to_output+="};"
+
+    print(to_output)
+
+
+
+
 if __name__ == "__main__":
     top_level = tkinter.Tk()
 
@@ -29,7 +55,7 @@ if __name__ == "__main__":
 
     grid=Frame(frame)
 
-    grid.grid(sticky=N+S+E+W, column = 0, row=num_rows, columnspan=2)
+    grid.grid(sticky=N+S+E+W, column = 0, row=num_rows, columnspan=20)
     Grid.rowconfigure(frame, num_rows, weight=1)
     Grid.columnconfigure(frame, 0, weight=1)
 
@@ -37,7 +63,7 @@ if __name__ == "__main__":
 
     for i in range(0,num_cols):
         for j in range(0,num_rows):
-            buttons[i][j] = tkinter.Button(frame, command= partial(identify,j,i))
+            buttons[i][j] = tkinter.Button(frame, command= partial(change_value,i,j))
             buttons[i][j].grid(row=i, column=j, sticky=N+S+E+W)
     
     for i in range(0, num_cols):
@@ -45,6 +71,12 @@ if __name__ == "__main__":
 
     for i in range(0, num_rows):
         Grid.rowconfigure(frame, i, weight = 1)   
+
+    
+    
+    select = tkinter.Button(frame, command=partial(convert))
+    select.grid(row = num_rows+1, columnspan=num_cols )
+
 
 
 
