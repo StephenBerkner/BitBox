@@ -4,12 +4,18 @@
 
 #include <stdint.h>
 #include <avr/io.h>
+#include <avr/pgmspace.h>
 
 #ifndef MATRIX_H_
 #define MATRIX_H_
 
 #define NUM_MATRICIES	4
 #define NUM_COLUMNS		8
+
+#define NUM_CHARS		96
+#define CHAR_LENGTH     8
+
+extern char const ascii_table[19][CHAR_LENGTH] PROGMEM;
 
 //Matrix Functions
 void matrix_init(void);
