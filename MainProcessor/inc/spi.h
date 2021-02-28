@@ -14,8 +14,6 @@
 #define MOSI		PINB3
 #define CS			PINB2
 
-//SPI functions
-
 void spi_init(void);
 
 void spi_set_ss(void);

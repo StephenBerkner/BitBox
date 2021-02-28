@@ -10,7 +10,7 @@ void usart_init(void){
 	UBRR0L = (unsigned char)(MYUBRR);
 	
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
-	UCSR0C = (0 << USBS0) | (3 << UCSZ00);
+	UCSR0C = (0 << USBS0) | (0 << UCSZ02)| (1 << UCSZ01) | (3 << UCSZ00);
 }
 
 void usart_transmit_char(char val){
@@ -23,7 +23,7 @@ void usart_transmit_string(char * val){
 	
 	while((current = *val++)){
 		usart_transmit_char(current);
-		_delay_ms(TRANSMIT_DELAY);
+		_delay_ms(USART_TRANSMIT_DELAY);
 	}	
 }
 
