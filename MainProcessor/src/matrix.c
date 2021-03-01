@@ -4,7 +4,6 @@
 
 #include "../inc/matrix.h"
 #include "../inc/spi.h"
-
 #include <stdint.h>
 #include <string.h>
 #include <avr/io.h>
@@ -127,8 +126,16 @@ uint8_t queue_is_full(void){
 int queue_size(void){
 	return queue_count;
 }
+
 uint8_t queue_peek(void){
 	return queue[queue_front];
+}
+
+void queue_clear(void){
+	//set queue to empty 
+	queue_front = 0;
+	queue_rear = -1;
+	queue_count = 0;
 }
 
 uint8_t queue_pop(void){
@@ -224,7 +231,7 @@ void buffer_clear(void){
 
 void buffer_shift(void){
 	if (!queue_is_empty()){
-		uint8_t to_add = queue_pop();// 0x0A;queue_POP(queue_pointer);
+		uint8_t to_add = queue_pop();
 		for(uint8_t i = 0; i < (NUM_COLUMNS*NUM_MATRICIES) - (NUM_MATRICIES-1)*NUM_COLUMNS; i++){
 			buffer[i]= (buffer[i] >> 1) | (to_add << 7);
 			to_add = to_add >> 1;			
@@ -232,7 +239,7 @@ void buffer_shift(void){
 
 	} else {
 		for(uint8_t i = 0; i < (NUM_COLUMNS*NUM_MATRICIES) - (NUM_MATRICIES-1)*NUM_COLUMNS; i++){
-			buffer[i]= (buffer[i] >> 1); //| (buffer[i - ((NUM_COLUMNS*NUM_MATRICIES) - NUM_COLUMNS)] >> 7);
+			buffer[i]= (buffer[i] >> 1);
 		}			
 	}	
 

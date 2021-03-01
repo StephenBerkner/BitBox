@@ -3,14 +3,23 @@
 */
 
 #include "../inc/usart.h"
+#include "../inc/matrix.h"
 #include <util/delay.h>
+#include <avr/interrupt.h>
+char received_char;
+
+// receive interrupt service routine
+ISR(USART_RX_vect){
+	received_char = (char)UDR0;
+}
 
 void usart_init(void){
 	UBRR0H = (unsigned char)((MYUBRR) >> 8);
 	UBRR0L = (unsigned char)(MYUBRR);
 	
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
 	UCSR0C = (0 << USBS0) | (0 << UCSZ02)| (1 << UCSZ01) | (3 << UCSZ00);
+	received_char = NULL;
 }
 
 void usart_transmit_char(char val){

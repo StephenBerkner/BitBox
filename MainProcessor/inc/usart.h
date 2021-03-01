@@ -5,13 +5,18 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define BAUD 2400
-#define MYUBRR F_CPU/16/BAUD-1
-
-#define USART_TRANSMIT_DELAY 10
 
 #ifndef USART_H_
 #define USART_H_
+
+#define NULL 0
+
+#define BAUD 2400
+#define MYUBRR F_CPU/16UL/BAUD-1
+
+#define USART_TRANSMIT_DELAY 10
+
+extern char received_char;
 
 void usart_init(void);
 

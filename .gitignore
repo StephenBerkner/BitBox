@@ -11,4 +11,5 @@ MainProcessor/Release
 !MainProcessor/inc/*.*
 !MainProcssor/src/*.*
 
-WiFiCoProcessor/src/credentials.lua  
+# Ignore credentials.lua in WiFiCoprocessor
+WiFiCoprocessor/credentials.lua  

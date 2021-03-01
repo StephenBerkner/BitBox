@@ -36,6 +36,8 @@ int queue_size(void);
 
 uint8_t queue_peek(void);
 
+void queue_clear(void);
+
 uint8_t queue_pop(void);
 
 void queue_insert(uint8_t val);

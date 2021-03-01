@@ -2,6 +2,7 @@
 #include "../inc/spi.h"
 #include "../inc/usart.h"
 
+#include <avr/interrupt.h>
 
 int main (void)
 {
@@ -12,16 +13,32 @@ int main (void)
 	matrix_clear();	
 	buffer_init();
 	buffer_clear();
+	sei();
 	
 	while(1){
-		//check for available data in serial buffer
-		if ((UCSR0A & (1 << RXC0)) != 0){
-			//push data 
-			matrix_push_char(UDR0);
+
+		if ((received_char != '\n') && (received_char != NULL)){
+			
+			matrix_push_char(received_char);
+			received_char = NULL;
+
+		} else if (received_char == '\n'){
+
+			// add the same number of spaces as the
+			// number of matrices to ensure the 
+			// screen clears after the message
+			for (uint8_t i = 0; i < NUM_MATRICIES; i++){
+				matrix_push_char(' ');
+			}
+			while(!queue_is_empty()){
+				matrix_display_buffer();
+				buffer_shift();
+			}	
+			
+			received_char = NULL;
 		}
 		
-		matrix_display_buffer();
-		buffer_shift();
+		
 	}
 	return 0;
 }
