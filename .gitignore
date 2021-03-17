@@ -1,15 +1,15 @@
 .vscode
 
 # Ignore everything except MainProcssor/src and MainProcessor/inc
-MainProcessor/.vs
-MainProcessor/MainProcessor.atsln
-MainProcessor/MainProcessor.componentinfo.xml
-MainProcessor/MainProcessor.cproj
-MainProcessor/Debug/*
-MainProcessor/Release
+mvp/MainProcessor/.vs
+mvp/MainProcessor/MainProcessor.atsln
+mvp/MainProcessor/MainProcessor.componentinfo.xml
+mvp/MainProcessor/MainProcessor.cproj
+mvp/MainProcessor/Debug/*
+mvp/MainProcessor/Release
 
-!MainProcessor/inc/*.*
-!MainProcssor/src/*.*
+!mvp/MainProcessor/inc/*.*
+!mvp/MainProcssor/src/*.*
 
 # Ignore credentials.lua in WiFiCoprocessor
-WiFiCoprocessor/credentials.lua  
+mvp/WiFiCoprocessor/credentials.lua  
